@@ -15,7 +15,7 @@ import System.Directory
 
 preprocessorPragma = "{-# OPTIONS_GHC -F -pgmF strip-ths #-}"
 
-buildDir = "build"
+buildDir = ".strip-ths"
 
 main :: IO ()
 main = do
