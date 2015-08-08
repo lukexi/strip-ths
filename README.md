@@ -10,8 +10,9 @@ to the top of any Template Haskell using file.
 Expects `stack`, but you could switch the call to "stack" to a call to "cabal" in `app/Main.hs` 
 and it should work fine.
 
-*Notes
-I build this to work around issues with GHC's built-in linker: it has problems compiling
+**Notes**
+
+I built this to work around issues with GHC's built-in linker: it has problems compiling
 any Template Haskell-using file that depends on a library that itself depends on DLLs.
 
 See https://ghc.haskell.org/trac/ghc/ticket/10672 and related tickets.
