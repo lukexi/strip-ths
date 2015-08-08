@@ -19,6 +19,8 @@ buildDir = "build"
 
 main :: IO ()
 main = do
+  createDirectoryIfMissing True (buildDir </> "src")
+
   [origFileName, _, outputFileName] <- getArgs
   let origBaseName = dropExtension origFileName
 
