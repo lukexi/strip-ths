@@ -17,9 +17,12 @@ preprocessorPragma = "{-# OPTIONS_GHC -F -pgmF strip-ths #-}"
 
 buildDir = ".strip-ths"
 
+includeDirs = ["src", "app", "test"]
+
 main :: IO ()
 main = do
-  createDirectoryIfMissing True (buildDir </> "src")
+  forM_ includeDirs $
+    createDirectoryIfMissing True . (buildDir </>)
 
   [origFileName, _, outputFileName] <- getArgs
   let origBaseName = dropExtension origFileName
@@ -33,8 +36,9 @@ main = do
 
   -- Next, generate a splices dump file
   _ <- rawSystem "stack" 
-    (words "exec -- ghc -ddump-splices -ddump-to-file -isrc -outputdir" 
-      ++ [buildDir, noPreprocessFileName])
+    (words "exec -- ghc -ddump-splices -ddump-to-file" 
+      ++ map ("-i"++) includeDirs
+      ++ ["-outputdir", buildDir, noPreprocessFileName])
 
   -- Read in the .dump-splices file so we can extract the splices from it
   -- NOTE weirdness: GHC nests a second "build" dir 
